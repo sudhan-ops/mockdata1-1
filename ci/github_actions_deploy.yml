@@ -1,0 +1,36 @@
+name: Deploy Supabase Backend
+
+on:
+  push:
+    branches:
+      - main # or your main branch
+    paths:
+      - 'supabase-backend/**' # Trigger only when changes are made in the supabase-backend directory
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1.2
+        with:
+          version: latest
+
+      - name: Login to Supabase CLI
+        run: supabase login
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Set Supabase Project Reference
+        run: echo "SUPABASE_PROJECT_REF=${{ secrets.SUPABASE_PROJECT_REF }}" >> $GITHUB_ENV
+
+      - name: Run Supabase Deployment Script
+        run: chmod +x ./supabase-backend/ci/deploy_supabase.sh && ./supabase-backend/ci/deploy_supabase.sh
+        working-directory: ./supabase-backend
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }} # Optional, if used in edge functions
+          # Add any other secrets required by your edge functions or deployment script

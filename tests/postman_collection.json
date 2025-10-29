@@ -1,0 +1,174 @@
+{
+  "info": {
+    "_postman_id": "YOUR_COLLECTION_ID",
+    "name": "Supabase Backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Sign Up (Example)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{SUPABASE_URL}}/auth/v1/signup",
+          "host": [
+            "{{SUPABASE_URL}}"
+          ],
+          "path": [
+            "auth",
+            "v1",
+            "signup"
+          ]
+        },
+        "description": "Example for user sign-up. Requires SUPABASE_URL and SUPABASE_ANON_KEY in environment."
+      },
+      "response": []
+    },
+    {
+      "name": "Auth - Sign In (Example)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{SUPABASE_URL}}/auth/v1/token?grant_type=password",
+          "host": [
+            "{{SUPABASE_URL}}"
+          ],
+          "path": [
+            "auth",
+            "v1",
+            "token"
+          ],
+          "query": [
+            {
+              "key": "grant_type",
+              "value": "password"
+            }
+          ]
+        },
+        "description": "Example for user sign-in. Requires SUPABASE_URL and SUPABASE_ANON_KEY in environment."
+      },
+      "response": []
+    },
+    {
+      "name": "RPC - is_admin",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{SUPABASE_ANON_KEY}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{SUPABASE_URL}}/rest/v1/rpc/is_admin",
+          "host": [
+            "{{SUPABASE_URL}}"
+          ],
+          "path": [
+            "rest",
+            "v1",
+            "rpc",
+            "is_admin"
+          ]
+        },
+        "description": "Calls the `is_admin` RPC function. Requires an authenticated user token."
+      },
+      "response": []
+    },
+    {
+      "name": "Edge Function - generate-invoice",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{SUPABASE_ANON_KEY}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"enrollment_id\": \"a1b2c3d4-e5f6-7890-1234-567890abcdef\"\n}"
+        },
+        "url": {
+          "raw": "{{SUPABASE_URL}}/functions/v1/generate-invoice",
+          "host": [
+            "{{SUPABASE_URL}}"
+          ],
+          "path": [
+            "functions",
+            "v1",
+            "generate-invoice"
+          ]
+        },
+        "description": "Calls the `generate-invoice` Edge Function. Requires SUPABASE_URL and SUPABASE_ANON_KEY in environment."
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "SUPABASE_URL",
+      "value": "YOUR_SUPABASE_URL",
+      "type": "string",
+      "description": "The URL of your Supabase project."
+    },
+    {
+      "key": "SUPABASE_ANON_KEY",
+      "value": "YOUR_SUPABASE_ANON_KEY",
+      "type": "string",
+      "description": "The public anon key for your Supabase project."
+    }
+  ]
+}

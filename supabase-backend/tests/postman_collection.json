@@ -1,0 +1,315 @@
+{
+  "info": {
+    "_postman_id": "YOUR_POSTMAN_COLLECTION_ID",
+    "name": "Supabase Backend Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{SUPABASE_URL}}/auth/v1/signup",
+              "host": [
+                "{{SUPABASE_URL}}"
+              ],
+              "path": [
+                "auth",
+                "v1",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Profile",
+      "item": [
+        {
+          "name": "Create User Profile Row",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{SUPABASE_ANON_KEY}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"{{USER_ID}}\",\n  \"full_name\": \"Test User\",\n  \"avatar_url\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/users",
+              "host": [
+                "{{SUPABASE_URL}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Read Own User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{USER_AUTH_TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/users?id=eq.{{USER_ID}}",
+              "host": [
+                "{{SUPABASE_URL}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "eq.{{USER_ID}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Try to Read Another User's Profile (Should Fail)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{USER_AUTH_TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/users?id=eq.ANOTHER_USER_ID",
+              "host": [
+                "{{SUPABASE_URL}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "eq.ANOTHER_USER_ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Attendance",
+      "item": [
+        {
+          "name": "Insert Attendance (Positive Test)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{USER_AUTH_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{USER_ID}}\",\n  \"site_id\": \"YOUR_SITE_ID\",\n  \"check_in_time\": \"2025-10-28T09:00:00Z\",\n  \"check_out_time\": \"2025-10-28T17:00:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/attendance",
+              "host": [
+                "{{SUPABASE_URL}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "attendance"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Insert Attendance (Negative Test - Missing Data)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{USER_AUTH_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{USER_ID}}\",\n  \"site_id\": \"YOUR_SITE_ID\",\n  \"check_in_time\": \"2025-10-28T09:00:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/attendance",
+              "host": [
+                "{{SUPABASE_URL}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "attendance"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Leaves",
+      "item": [
+        {
+          "name": "Request Leave",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{USER_AUTH_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{USER_ID}}\",\n  \"start_date\": \"2025-11-01\",\n  \"end_date\": \"2025-11-03\",\n  \"reason\": \"Vacation\",\n  \"status\": \"pending\"\n}"
+            },
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/leaves",
+              "host": [
+                "{{SUPABASE_URL}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "leaves"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Approve Leave",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ADMIN_AUTH_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\"\n}"
+            },
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/leaves?id=eq.{{LEAVE_ID}}",
+              "host": [
+                "{{SUPABASE_URL}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "leaves"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "eq.{{LEAVE_ID}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "SUPABASE_URL",
+      "value": "YOUR_SUPABASE_URL",
+      "type": "string"
+    },
+    {
+      "key": "SUPABASE_ANON_KEY",
+      "value": "YOUR_SUPABASE_ANON_KEY",
+      "type": "string"
+    },
+    {
+      "key": "USER_ID",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "USER_AUTH_TOKEN",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "ADMIN_AUTH_TOKEN",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "LEAVE_ID",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
