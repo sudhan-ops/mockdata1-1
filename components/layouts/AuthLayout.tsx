@@ -40,14 +40,14 @@ const AuthLayout: React.FC = () => {
                 style={{ backgroundImage: `url(${imageUrl})` }}
             />
             ))}
-            <div className="absolute inset-0 bg-black/30"></div> {/* Dark overlay */}
+            <div className="absolute inset-0 bg-black/30 backdrop-filter backdrop-blur-sm"></div> {/* Dark overlay with blur */}
         </div>
 
         {/* Centered content container */}
-        <div className="relative w-full max-w-5xl p-4">
-             <div className="w-full grid md:grid-cols-2 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-md bg-black/40 border border-white/10">
+        <div className="relative w-full max-w-[1100px] p-4 mx-auto">
+             <div className="w-full grid md:grid-cols-[55%_45%] rounded-2xl shadow-2xl overflow-hidden backdrop-filter backdrop-blur-md bg-black/40 border border-white/10">
                 {/* Left Visual Column */}
-                <div className="hidden md:flex flex-col justify-between p-16 bg-gradient-to-br from-black/40 to-black/70">
+                <div className="hidden md:flex flex-col justify-between px-16 py-12 bg-gradient-to-br from-black/40 to-black/70">
                     <div>
                         <Logo className="h-14" />
                         <h1 className="text-4xl font-bold text-white mt-8 leading-tight drop-shadow-lg">
@@ -64,14 +64,12 @@ const AuthLayout: React.FC = () => {
                 </div>
 
                 {/* Right Form Column with Glassmorphism effect */}
-                <div className="p-8 sm:p-12 lg:p-16 flex flex-col justify-center bg-black/40 backdrop-blur-xl border-l border-white/10">
-                    <div className="w-full max-w-md mx-auto">
+                <div className="p-14 flex flex-col justify-center bg-black/40 backdrop-filter backdrop-blur-md border-l border-white/10">
+                    <div className="w-full mx-auto">
                         {/* Mobile-only Logo */}
                         <div className="md:hidden flex justify-center mb-6">
                             <Logo className="h-10" />
                         </div>
-                        <h2 className="text-3xl font-bold text-white mb-2">Sign In</h2>
-                        <p className="text-gray-300 mb-8">Enter your credentials to access your account.</p>
                         <Outlet />
                     </div>
                 </div>
